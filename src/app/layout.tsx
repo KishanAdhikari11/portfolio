@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Devfolio | Portfolio Website using Next.js, Tailwind CSS, and Framer Motion",
-  description: "Devfolio is a portfolio website for developers to showcase their projects and skills.",
+  title: "Kishan Adhikari",
+  description: "Kishan Adhikari Portfolio Website",
 };
 
 export default function RootLayout({
@@ -26,14 +26,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-    <body className={`bg-white transition-colors dark:bg-gray-900 dark:text-white ${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" suppressHydrationWarning>
+      <body 
+        className={`${geistSans.variable} ${geistMono.variable}`}
+        suppressHydrationWarning
+      >
         <ThemeProvider>
-          <Navbar />
-          <main className="min-h-screen pt-24">
-            {children}
-          </main>
-          <Footer />
+          <div className="bg-white transition-colors dark:bg-gray-900 dark:text-white min-h-screen">
+            <Navbar />
+            <main className="min-h-screen pt-24">
+              {children}
+            </main>
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>

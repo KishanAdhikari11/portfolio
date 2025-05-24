@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getBlogPosts } from '../utils/getBlogPost';
+import Image from 'next/image'
 
 export default function BlogsPage() {
   const posts = getBlogPosts();
@@ -16,7 +17,7 @@ export default function BlogsPage() {
             className="group block bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-700 shadow-sm hover:shadow-xl transition-all duration-300 p-6 hover:border-primary"
           >
             {post.metadata.image && (
-              <img 
+              <Image
                 src={post.metadata.image} 
                 alt={post.metadata.title}
                 className="w-full h-48 object-cover rounded-lg mb-4 group-hover:scale-[1.02] transition-transform"

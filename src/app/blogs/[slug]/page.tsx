@@ -1,23 +1,23 @@
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from 'next/link';
-import { getBlogPost,getBlogPosts } from '@/app/utils/getBlogPost';
+import { getBlogPost, getBlogPosts } from '@/app/utils/getBlogPost';
 import { MDXComponents } from '@/components/MDXComponent';
-import { Metadata } from 'next';
+import { Metadata, NextPage } from 'next';
+
+// Define the PageProps type explicitly
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
 
 export async function generateStaticParams() {
-  const posts = await getBlogPosts(); // ✅ await in case it's async
+  const posts = await getBlogPosts();
   return posts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }> | { slug: string }; // Update type to account for possible Promise
-}): Promise<Metadata> {
-  // Await params to resolve if it's a Promise
-  const resolvedParams = await params;
-  const post = await getBlogPost(resolvedParams.slug); // Use resolved params
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params; // Resolve the Promise
+  const post = await getBlogPost(slug);
 
   if (!post) return {};
   return {
@@ -26,14 +26,46 @@ export async function generateMetadata({
   };
 }
 
-export default async function BlogPost({
-  params,
-}: {
-  params: Promise<{ slug: string }> | { slug: string }; // Update type to account for possible Promise
-}) {
-  // Await params to resolve if it's a Promise
-  const resolvedParams = await params;
-  const post = await getBlogPost(resolvedParams.slug); // Use resolved params
+// Helper function to safely format date
+function formatDate(dateInput: string | Date | undefined): string {
+  if (!dateInput) return '';
+  
+  try {
+    let date: Date;
+    
+    if (typeof dateInput === 'string') {
+      if (dateInput.includes('T') || dateInput.includes('Z')) {
+        date = new Date(dateInput);
+      } else if (dateInput.match(/^\d{4}-\d{2}-\d{2}$/)) {
+        date = new Date(dateInput + 'T00:00:00');
+      } else if (dateInput.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/)) {
+        date = new Date(dateInput);
+      } else {
+        date = new Date(dateInput);
+      }
+    } else {
+      date = dateInput;
+    }
+
+    if (isNaN(date.getTime())) {
+      console.warn('Invalid date:', dateInput);
+      return String(dateInput);
+    }
+
+    return date.toLocaleDateString('ne-NP', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  } catch (error) {
+    console.warn('Date formatting error:', error, 'Input:', dateInput);
+    return String(dateInput);
+  }
+}
+
+const BlogPost: NextPage<PageProps> = async ({ params }) => {
+  const { slug } = await params; // Resolve the Promise
+  const post = await getBlogPost(slug);
 
   if (!post) notFound();
 
@@ -55,9 +87,11 @@ export default async function BlogPost({
             <p className="text-2xl text-zinc-600 dark:text-zinc-300 mb-4">
               {post.metadata.description}
             </p>
-            <time className="text-lg text-zinc-500">
-              {new Date(post.metadata.date).toLocaleDateString('ne-NP')}
-            </time>
+            {post.metadata.date && (
+              <time className="text-lg text-zinc-500">
+                {formatDate(post.metadata.date)}
+              </time>
+            )}
           </header>
 
           <div className="prose prose-blue dark:prose-invert prose-2xl max-w-none leading-9">
@@ -84,4 +118,6 @@ export default async function BlogPost({
       </div>
     </div>
   );
-}
+};
+
+export default BlogPost;

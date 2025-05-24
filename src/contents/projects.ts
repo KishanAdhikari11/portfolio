@@ -1,69 +1,39 @@
 import { Project } from "@/types";
 
-
 export const projects: Project[] = [
-    {
-        title: 'E-commerce Platform',
-        description: 'A full-stack e-commerce platform built with Next.js, TypeScript, and Tailwind CSS.',
-        technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Stripe'],
-        githubLink: 'https://github.com',
-        demoLink: 'https://demo.com',
-        image: '/projects/e-commerce-website.png',
-      },
-      {
-        title: 'Task Management App',
-        description: 'A collaborative task management application with real-time updates.',
-        technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io'],
-        githubLink: 'https://github.com',
-        demoLink: 'https://demo.com',
-        image: '/projects/task-manager.webp',
-      },
-      {
-        title: 'Portfolio Website',
-        description: 'My personal portfolio website showcasing my projects and skills.',
-        technologies: ['Next.js', 'Tailwind CSS', 'Framer Motion'],
-        githubLink: 'https://github.com',
-        demoLink: 'https://demo.com',
-        image: '/projects/portfolio-website.jpg',
-      },
-      {
-        title: 'Blog Platform',
-        description: 'A blogging platform with user authentication and markdown support.',
-        technologies: ['Gatsby', 'GraphQL', 'Contentful'],
-        githubLink: 'https://github.com',
-        demoLink: 'https://demo.com',
-        image: '/projects/blog-website.jpeg',
-      },
-      {
-        title: 'Weather App',
-        description: 'A weather application that provides real-time weather updates.',
-        technologies: ['React', 'OpenWeatherMap API'],
-        githubLink: 'https://github.com',
-        demoLink: 'https://demo.com',
-        image: '/projects/weather-app.png',
-      },
-      {
-        title: 'Chat Application',
-        description: 'A real-time chat application using WebSocket technology.',
-        technologies: ['React', 'Node.js', 'Socket.io'],
-        githubLink: 'https://github.com',
-        demoLink: 'https://demo.com',
-        image: '/projects/chat-app.png',
-      },
-      {
-        title: 'Recipe Finder',
-        description: 'A recipe search application using the Edamam API.',
-        technologies: ['React', 'Edamam API'],
-        githubLink: 'https://github.com',
-        demoLink: 'https://demo.com',
-        image: '/projects/recipe-finder.png',
-      },
-      {
-        title: 'Expense Tracker',
-        description: 'A personal finance tracker to manage expenses and income.',
-        technologies: ['React', 'Firebase'],
-        githubLink: 'https://github.com',
-        demoLink: 'https://demo.com',
-        image: '/projects/expense-tracker.webp',
-      }
-  ];
+  {
+    title: 'Nepalidatecli',
+    description: 'A command line interface (CLI) app written in Go that displays current Nepali date, time, tithi, events and panchang. Built using Cobra library with web scraping capabilities using GoColly to fetch data from hamropatro.com.',
+    technologies: ['Go', 'Cobra', 'GoColly', 'Web Scraping', 'CLI'],
+    githubLink: 'https://github.com/KishanAdhikari11/Nepalidatecli',
+    image: '/projects/date-cli.png',
+  },
+  {
+    title: 'Nepali News Summarizer',
+    description: 'A machine learning application that fine-tunes mT5 and mBART models to summarize Nepali news articles. Features automated data extraction using Beautiful Soup and containerized deployment with Docker.',
+    technologies: ['Python', 'Flask', 'React', 'mT5', 'mBART', 'Beautiful Soup', 'Docker'],
+    githubLink: 'https://github.com/KishanAdhikari11/abstractive-news-summary-in-nepali',
+    image: '/projects/news.png',
+  },
+  {
+    title: 'Handwriting Synthesis and Cloning',
+    description: 'A generative AI model combining BigGAN and Transformer architectures for realistic handwriting synthesis and style cloning. Trained on custom English handwriting datasets with diverse style generation capabilities.',
+    technologies: ['Python', 'BigGAN', 'Transformer', 'PyTorch', 'Machine Learning'],
+    githubLink: 'https://github.com/KishanAdhikari11/HandwritingGAN',
+    image: '/projects/handwriting.png',
+  },
+  {
+    title: 'Stake Crash Alert Bot',
+    description: 'A high-performance Playwright-based bot for 24/7 Stake Crash game monitoring with real-time Telegram notifications. Features automated data extraction from authenticated and CAPTCHA-protected sites.',
+    technologies: ['Python', 'Playwright', 'Telegram Bot API', 'Web Scraping', 'Automation'],
+    githubLink: 'https://github.com/KishanAdhikari11/Crash_Monitor_TelegramBot',
+    image: '/projects/stake.png',
+  },
+  {
+    title: 'Next.js LLM Content Generator',
+    description: 'An AI-powered content processing application using Gemini API for paraphrasing, summarizing, and converting content to Markdown. Features automated workflows with AWS Lambda and EventBridge integration.',
+    technologies: ['Next.js', 'TypeScript', 'Gemini API', 'AWS Lambda', 'EventBridge', 'Markdown'],
+    githubLink: 'https://github.com/yourusername/nextjs-llm-app',
+    image: '/projects/blog-website.jpeg',
+  }
+];
