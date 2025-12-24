@@ -1,15 +1,20 @@
 export interface Project {
   title: string;
   description: string;
-  technologies: string[];
-  githubLink: string;
   image: string;
+  githubLink: string;
+  technologies: string[];
+  liveLink?: string; 
 }
 
-export interface Blog {
-  title: string;
-  excerpt: string;
-  date: string;
-  readTime: string;
+
+export interface BlogPost {
   slug: string;
+  metadata: {
+    title: string;
+    date: string;
+    description: string;
+    category?: string;
+    readTime?: string;
+  };
 }
