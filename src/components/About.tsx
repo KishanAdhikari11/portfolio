@@ -2,13 +2,9 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { fadeInUp } from '@/utils/animations';
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 10 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.5 }
-};
+
 
 const container = {
   hidden: { opacity: 0 },
@@ -76,9 +72,9 @@ export default function About() {
             period="Jan 2025 – June 2025"
             description="Automated Dental Blog Generation System"
             bullets={[
-              "Scraped dental blogs using BeautifulSoup",
               "Automated content pipeline using AWS Lambda and EventBridge",
-              "Used Gemini API to paraphrase and summarize blog content"
+              "Used Gemini API to paraphrase and summarize blog content",
+              "Implemented Agent to automatically generate blog outlines and titles based on SEO keywords"
             ]}
             logo="/logos/maskey.png" 
           />
@@ -89,7 +85,7 @@ export default function About() {
             period="Dec 2023 – Present"
             description="Developing complex automation and real-time data systems."
             bullets={[
-              "Built large scale scraper sites using Python and Playwright",
+              "Built large scale scraper using Python and Playwright",
               "Analyzed and processed large financial datasets with Pandas and NumPy",
             ]}
             logo="/image/upwork.png"

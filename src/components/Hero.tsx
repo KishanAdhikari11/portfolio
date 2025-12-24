@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion'; 
 import { useState, useEffect } from 'react'; 
 import { FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6'
+import { fadeInUp } from '@/utils/animations';
 import { SiLeetcode } from 'react-icons/si';
 
 import { 
@@ -18,11 +19,7 @@ import {
   Users,
 } from 'lucide-react';
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 15 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
-};
+
 
 const roles = ["AI/ML Engineer", "Backend Developer", "Automation Expert","Web Scraping Specialist"];
 

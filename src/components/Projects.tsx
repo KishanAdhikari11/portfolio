@@ -5,27 +5,27 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { FaGithub } from 'react-icons/fa'
 import { TbWorld } from 'react-icons/tb'
+import { Project } from '@/types'
 import { 
   SiPython, SiPytorch, SiFastapi, SiAmazonwebservices, 
   SiGo, SiFlask, SiRedis, SiDocker, SiPostgresql, SiLinux, SiGithub, SiReact
 } from 'react-icons/si'
 
-// Define the icons with their specific brand colors
+
+
 const techIcons: Record<string, React.ReactNode> = {
-  "Python": <SiPython className="w-8 h-8 text-[#3776AB]" />, // Python Blue
-  "PyTorch": <SiPytorch className="w-8 h-8 text-[#EE4C2C]" />, // PyTorch Orange/Red
-  "FastAPI": <SiFastapi className="w-8 h-8 text-[#05998B]" />, // FastAPI Teal
-  "AWS": <SiAmazonwebservices className="w-8 h-8 text-[#FF9900]" />, // AWS Orange
-  "Golang": <SiGo className="w-8 h-8 text-[#00ADD8]" />, // Go Blue
-  "Flask": <SiFlask className="w-8 h-8 text-zinc-200" />, // Flask (White/Light Zinc for dark mode)
-  "Redis": <SiRedis className="w-8 h-8 text-[#DC382D]" />, // Redis Red
-  "Docker": <SiDocker className="w-8 h-8 text-[#2496ED]" />, // Docker Blue
-  "PostgreSQL": <SiPostgresql className="w-8 h-8 text-[#336791]" />, // PostgreSQL Blue
-  "Linux": <SiLinux className="w-8 h-8 text-[#FCC624]" />, // Linux Yellow
-  "GitHub": <SiGithub className="w-8 h-8 text-zinc-200" />, // GitHub (White/Light Zinc for dark mode)
-  "React": <SiReact className="w-8 h-8 text-[#61DAFB]" />, // React Blue
-
-
+  "Python": <SiPython className="w-8 h-8 text-[#3776AB]" />,
+  "PyTorch": <SiPytorch className="w-8 h-8 text-[#EE4C2C]" />,
+  "FastAPI": <SiFastapi className="w-8 h-8 text-[#05998B]" />,
+  "AWS": <SiAmazonwebservices className="w-8 h-8 text-[#FF9900]" />,
+  "Golang": <SiGo className="w-8 h-8 text-[#00ADD8]" />,
+  "Flask": <SiFlask className="w-8 h-8 text-zinc-200" />,
+  "Redis": <SiRedis className="w-8 h-8 text-[#DC382D]" />,
+  "Docker": <SiDocker className="w-8 h-8 text-[#2496ED]" />,
+  "PostgreSQL": <SiPostgresql className="w-8 h-8 text-[#336791]" />,
+  "Linux": <SiLinux className="w-8 h-8 text-[#FCC624]" />,
+  "GitHub": <SiGithub className="w-8 h-8 text-zinc-200" />,
+  "React": <SiReact className="w-8 h-8 text-[#61DAFB]" />,
 };
 
 export default function Projects() {
@@ -33,6 +33,7 @@ export default function Projects() {
     <section className="flex items-center gap-2 bg-[#050505] text-zinc-300 font-mono pt-24 px-4">
       <div className="max-w-3xl mx-auto">
         
+        {/* TECH STACK SECTION */}
         <div className="mb-20">
           <h2 className="text-[12px] uppercase tracking-[0.3em] text-zinc-500 font-bold mb-8">
             TECH STACK
@@ -56,7 +57,7 @@ export default function Projects() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project) => (
+          {(projects as Project[]).map((project: Project) => (
             <motion.div
               key={project.title}
               whileHover={{ y: -8 }}
@@ -81,7 +82,7 @@ export default function Projects() {
                     {project.title}
                   </h3>
                   <div className="flex gap-4 text-zinc-600">
-                    <a href={project.githubLink} target="_blank" className="hover:text-white transition-colors">
+                    <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                       <FaGithub size={18} />
                     </a>
                     <a href="#" className="hover:text-white transition-colors">
@@ -95,13 +96,21 @@ export default function Projects() {
                 </p>
 
                 <div className="mt-auto flex flex-wrap gap-2">
-                  {project.technologies.map((tech) => (
+                  {/* Fixed: Explicitly typed 'tech' as string */}
+                  {project.technologies.map((tech: string) => (
                     <div 
                       key={tech} 
-                      className="p-2.5 bg-zinc-900/40 border border-zinc-800/50 rounded-xl text-zinc-400 group-hover:border-zinc-700 transition-all duration-300"
+                      className="p-2 bg-zinc-900/40 border border-zinc-800/50 rounded-xl text-zinc-400 group-hover:border-zinc-700 transition-all duration-300"
                       title={tech}
                     >
-                      {techIcons[tech] || <span className="text-[10px] px-1 font-bold">{tech}</span>}
+                      {/* Scale icons down for the project tags */}
+                      {techIcons[tech] ? (
+                        <div className="scale-75">
+                          {techIcons[tech]}
+                        </div>
+                      ) : (
+                        <span className="text-[10px] px-1 font-bold">{tech}</span>
+                      )}
                     </div>
                   ))}
                 </div>

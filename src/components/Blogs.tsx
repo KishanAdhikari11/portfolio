@@ -2,24 +2,10 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { BlogPost } from '@/types';
+import { fadeInUp } from '@/utils/animations';
 import { MdOutlineArrowOutward, MdOutlineCalendarToday, MdOutlineTimer } from 'react-icons/md';
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 15 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
-};
-
-interface BlogPost {
-  slug: string;
-  metadata: {
-    title: string;
-    date: string;
-    description: string;
-    category?: string;
-    readTime?: string;
-  };
-}
 
 export default function Blogs({ posts }: { posts: BlogPost[] }) {
   const latestBlogs = posts.slice(0, 3);
