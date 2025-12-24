@@ -1,19 +1,25 @@
-import Head from 'next/head';
+'use client'
 
-const Resume = () => {
+import { useRouter } from 'next/navigation';
+import Resume from '@/components/Resume'; 
+
+export default function ResumePage() {
+  const router = useRouter();
+
+
   return (
-    <>
-      <Head>
-        <title>My Resume</title>
-        <meta name="description" content="View my professional resume" />
-      </Head>
-      <iframe
-        src="/Resume/KishanAdhikari_.pdf"
-        className="w-full h-screen"
-        title="My Resume"
+    <main className="bg-[#323639] min-h-screen">
+      <Resume 
+        isOpen={true} 
+        onClose={() => router.push('/')} 
       />
-    </>
+      
+    
+      <div className="fixed inset-0 flex items-center justify-center -z-10">
+        <p className="text-zinc-500 font-mono text-xs animate-pulse">
+          LOADING DOCUMENT...
+        </p>
+      </div>
+    </main>
   );
-};
-
-export default Resume;
+}

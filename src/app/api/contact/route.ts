@@ -1,8 +1,5 @@
-// app/api/contact/route.ts
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface ContactRequestBody {
   name: string
@@ -11,6 +8,15 @@ interface ContactRequestBody {
 }
 
 export async function POST(request: Request) {
+  const apiKey = process.env.RESEND_API_KEY;
+  
+  if (!apiKey) {
+    console.error("RESEND_API_KEY is not defined in environment variables.");
+    return NextResponse.json({ message: 'Server configuration error' }, { status: 500 });
+  }
+
+  const resend = new Resend(apiKey);
+
   try {
     const { name, email, message } = await request.json() as ContactRequestBody
 
@@ -18,21 +24,30 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'All fields are required' }, { status: 400 })
     }
 
-    const data = await resend.emails.send({
-      from: 'Portfolio Contact <onboarding@resend.dev>', 
-      to: 'adhikarykishan11@gmail.com', // 👈 your own email
-      subject: `New Contact Message from ${name}`,
+    const { data, error } = await resend.emails.send({
+      from: 'Portfolio <onboarding@resend.dev>', 
+      to: 'adhikarykishan11@gmail.com', 
+      subject: `Lab Message: ${name}`,
       html: `
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
+        <div style="font-family: monospace; background-color: #050505; color: #d4d4d8; padding: 20px; border: 1px solid #27272a;">
+          <h2 style="color: #ffffff; border-bottom: 1px solid #27272a; padding-bottom: 10px;">New Transmission Received</h2>
+          <p><strong>Sender:</strong> ${name}</p>
+          <p><strong>Source:</strong> ${email}</p>
+          <div style="margin-top: 20px; padding: 15px; background-color: #0a0a0a; border-left: 2px solid #06b6d4;">
+            <p><strong>Message Body:</strong></p>
+            <p>${message}</p>
+          </div>
+        </div>
       `,
     })
 
-    return NextResponse.json({ message: 'Message sent successfully', data }, { status: 200 })
+    if (error) {
+      return NextResponse.json({ message: error.message }, { status: 400 })
+    }
+
+    return NextResponse.json({ message: 'Transmission successful', data }, { status: 200 })
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Failed to send message'
+    const errorMessage = error instanceof Error ? error.message : 'Internal Server Error'
     return NextResponse.json({ message: errorMessage }, { status: 500 })
   }
 }
